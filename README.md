@@ -9,9 +9,10 @@
 [![Layer 1](https://img.shields.io/badge/Layer%201-Verification%20Engine-FFC300?style=flat-square)](#-layer-1--সত্য-যাচাই-verification-engine)
 [![Layer 2](https://img.shields.io/badge/Layer%202-Justice%20Tracker-0D1B2A?style=flat-square)](#-layer-2--ন্যায়বিচার-justice-tracker)
 [![Bilingual](https://img.shields.io/badge/bilingual-বাংলা%20%2F%20English-D62828?style=flat-square)](#)
+[![Pitch Page](https://img.shields.io/badge/pitch%20page-live%20on%20GitHub%20Pages-dba63c?style=flat-square)](https://YOUR-USERNAME.github.io/YOUR-REPO/)
 [![License](https://img.shields.io/badge/license-MIT-black?style=flat-square)](#-license)
 
-**[▶ Live Demo](#) · [📖 API Docs](#-api-reference) · [🖥️ Admin Panel](#-admin-panel) · [🎬 Pitch Page](./july-memorial.html)**
+**[▶ Live Demo](#) · [📖 API Docs](#-api-reference) · [🖥️ Admin Panel](#-admin-panel) · [🎬 Pitch Page (GitHub Pages)](https://YOUR-USERNAME.github.io/YOUR-REPO/)**
 
 </div>
 
@@ -24,6 +25,42 @@ In July 2024, Bangladesh lived through a month that changed the country. Almost 
 **ShottoQR (সত্যQR, "Truth QR")** exists to close that gap. It is a forensic evidence pipeline that tells you how trustworthy an image is and why, a transparent case tracking system that follows a victim's journey from report to resolution without ever exposing their identity, and a living, bilingual archive so July 2024 is remembered with facts attached to it, not just feeling.
 
 This isn't a hypothetical. It's a working system with 7 real forensic signals, a SHA-256 hash chained seal, QR verifiable certificates, a public transparency portal, an admin review workflow, and a role based (never name based) chain of custody log. All tested end to end.
+
+---
+
+## 🎬 See It Live
+
+**Pitch page:** the full bilingual, animated identity built for this project lives at **[YOUR-USERNAME.github.io/YOUR-REPO](https://YOUR-USERNAME.github.io/YOUR-REPO/)**, served straight from this repo's `/docs` folder via GitHub Pages. No install needed, judges can open it on a phone.
+
+**Product demo:**
+
+![ShottoQR walkthrough](./assets/demo.gif)
+
+*(record this yourself, see below, GitHub can't render a live product from a README)*
+
+<details>
+<summary><strong>How to enable the GitHub Pages link above</strong></summary>
+
+1. Push this repo to GitHub, with `docs/index.html` included (already set up in this repo).
+2. Go to **Settings → Pages** on the repo.
+3. Under **Build and deployment**, set **Source: Deploy from a branch**, **Branch: main**, **Folder: /docs**. Save.
+4. GitHub gives you a URL like `https://your-username.github.io/your-repo/` within a minute or two.
+5. Replace every `YOUR-USERNAME.github.io/YOUR-REPO` in this README with that real URL.
+
+</details>
+
+<details>
+<summary><strong>How to record the demo GIF</strong></summary>
+
+1. Run the app locally (`uvicorn app.main:app --reload`) and open `http://localhost:8000/`.
+2. Screen-record a 20 to 40 second walkthrough: upload an image, watch the Integrity Score appear, open the certificate/QR, then flip the language toggle. Free tools: **ScreenToGif** (Windows), **Kap** (Mac), **Peek** (Linux), or any screen recorder plus `ffmpeg`.
+3. If you recorded an `.mp4`, convert it to a GIF and shrink it so it loads fast on GitHub:
+   ```bash
+   ffmpeg -i demo.mp4 -vf "fps=12,scale=800:-1:flags=lanczos" -loop 0 demo.gif
+   ```
+4. Save the file as `assets/demo.gif` in this repo. It renders automatically wherever `![ShottoQR walkthrough](./assets/demo.gif)` appears in this README, no extra setup.
+
+</details>
 
 ---
 
@@ -102,28 +139,20 @@ A pretrained CNN forgery detection model was scoped and evaluated and deliberate
 
 ## 🏗️ Architecture
 
-```
-                     ┌─────────────────────────┐
-   image upload ───▶ │   Layer 1: Verification  │
-                     │  ELA·EXIF·Blur·Histogram │───▶ Integrity Score + Reasons
-                     │  Blockiness·Rotation·SS  │
-                     └────────────┬─────────────┘
-                                  │ SHA-256 seal + hash chain
-                                  ▼
-                     ┌─────────────────────────┐
-                     │   Seal · QR · Certificate │───▶ /verify/{id} (public re-check)
-                     └────────────┬─────────────┘
-                                  │ link-evidence
-                                  ▼
-                     ┌─────────────────────────┐
-                     │  Layer 2: Justice Tracker │───▶ public transparency feed
-                     │  Report→Investigation→    │      (PII-free, role-based log)
-                     │  Medical→Compensation→    │
-                     │  Final Resolution         │
-                     └─────────────────────────┘
+```mermaid
+flowchart TD
+    A["Image upload<br/>role: Journalist / Witness / Investigator / Public"] --> B["Layer 1: Verification Engine<br/>ELA · EXIF · Blur · Histogram<br/>Blockiness · Rotation · Screenshot match"]
+    B --> C["Integrity Score + reasons list"]
+    C --> D["Seal · QR · Certificate<br/>SHA-256 hash chain"]
+    D --> E["/verify/{id}<br/>public, independent re-check"]
+    D --> F["Layer 2: Justice Tracker<br/>link-evidence to a case"]
+    F --> G["Report to Investigation to<br/>Medical Support to Compensation to<br/>Final Resolution"]
+    G --> H["Public transparency feed<br/>PII-free, role-based custody log"]
 ```
 
 **Stack:** FastAPI, SQLAlchemy, SQLite, vanilla JS/HTML/CSS frontend (bilingual I18N), Pillow forensics pipeline, `qrcode`, Playwright for testing.
+
+GitHub renders the diagram above automatically since it's a fenced ```mermaid``` block, no image export needed.
 
 ---
 
@@ -198,6 +227,8 @@ scripts/
 ├─ test_pipeline.py    Task 2
 └─ seal_all.py           Task 3
 templates/index.html · static/css/style.css · static/js/main.js   Frontend + I18N + JULY archive data
+docs/index.html       GitHub Pages source (copy of the pitch page, see "See It Live" above)
+assets/demo.gif        Product walkthrough GIF embedded in this README
 ```
 
 To add another judge facing language (Hindi, Arabic, French, whoever is on the panel), add one key to every entry in the `I18N` object in `static/js/main.js` and a matching button in `.lang-switch` in `templates/index.html`.
