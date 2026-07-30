@@ -1,0 +1,105 @@
+<svg viewBox="0 0 1600 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ShottoQR — Sealed Truth for an Unforgettable July">
+  <defs>
+    <linearGradient id="bgBase" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0c0a09"/>
+      <stop offset="100%" stop-color="#171310"/>
+    </linearGradient>
+    <radialGradient id="bgGlow" cx="50%" cy="72%" r="65%">
+      <stop offset="0%" stop-color="#5c1414" stop-opacity="0.65"/>
+      <stop offset="55%" stop-color="#5c1414" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#0c0a09" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#dba63c" stop-opacity="0.95"/>
+      <stop offset="45%" stop-color="#c9852f" stop-opacity="0.55"/>
+      <stop offset="75%" stop-color="#8c1f1f" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#8c1f1f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="scanGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#dba63c" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#dba63c" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#dba63c" stop-opacity="0"/>
+    </linearGradient>
+
+    <style>
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes riseIn { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes haloPulse { 0%,100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.07); opacity: 0.85; } }
+      @keyframes birdRise { 0% { opacity: 0; transform: translate(0,0); } 12% { opacity: 1; } 85% { opacity: 0.9; } 100% { opacity: 0; transform: translate(24px,-190px); } }
+      @keyframes scan { 0% { opacity: 0; transform: translateY(0); } 8% { opacity: 0.9; } 92% { opacity: 0.9; } 100% { opacity: 0; transform: translateY(300px); } }
+      @keyframes flicker { 0%,100% { opacity: 0.9; } 50% { opacity: 0.6; } }
+
+      .bg-glow   { animation: fadeIn 1.6s ease both; }
+      .halo      { transform-origin: 800px 300px; animation: fadeIn 1.2s ease both, haloPulse 4.5s ease-in-out 1.2s infinite; }
+      .figure    { animation: riseIn 1.1s ease 0.45s both; }
+      .headband  { animation: fadeIn 0.8s ease 1.15s both; }
+      .scanline  { animation: scan 3.6s ease-in-out 1.6s infinite; }
+      .title-bn  { animation: riseIn 0.9s ease 1.35s both; }
+      .title-en  { animation: riseIn 0.9s ease 1.6s both; }
+      .tagline   { animation: fadeIn 1.1s ease 2.0s both; }
+      .pill      { animation: fadeIn 0.9s ease 2.25s both; }
+      .bird      { animation: birdRise 5.2s ease-in infinite; }
+      .bird.b2   { animation-delay: 1.4s; }
+      .bird.b3   { animation-delay: 2.9s; }
+      .bird.b4   { animation-delay: 0.6s; }
+      .status-dot{ animation: flicker 2.4s ease-in-out infinite; }
+
+      text { font-family: 'Noto Serif Bengali','Hind Siliguri','Segoe UI',sans-serif; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1600" height="520" fill="url(#bgBase)"/>
+  <rect x="0" y="0" width="1600" height="520" fill="url(#bgGlow)" class="bg-glow"/>
+
+  <circle cx="800" cy="300" r="180" fill="url(#halo)" class="halo"/>
+
+  <rect x="0" y="90" width="1600" height="3" fill="url(#scanGrad)" class="scanline"/>
+
+  <g class="bird b1" transform="translate(520,230)">
+    <path d="M0,0 q9,-13 18,0 q9,-13 18,0" stroke="#dba63c" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+  <g class="bird b2" transform="translate(1080,215)">
+    <path d="M0,0 q9,-13 18,0 q9,-13 18,0" stroke="#dba63c" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+  <g class="bird b3" transform="translate(600,170)">
+    <path d="M0,0 q7,-10 14,0 q7,-10 14,0" stroke="#f3ead9" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.8"/>
+  </g>
+  <g class="bird b4" transform="translate(1010,275)">
+    <path d="M0,0 q7,-10 14,0 q7,-10 14,0" stroke="#f3ead9" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.8"/>
+  </g>
+
+  <g class="figure">
+    <path d="M760,268 L500,290 M500,290 L470,296" stroke="#0c0a09" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M840,268 L1100,290 M1100,290 L1130,296" stroke="#0c0a09" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M760,268 L500,290" stroke="#dba63c" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.35"/>
+    <path d="M840,268 L1100,290" stroke="#dba63c" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.35"/>
+
+    <path d="M770,258 L830,258 L855,430 Q800,452 745,430 Z" fill="#0c0a09" stroke="#dba63c" stroke-width="1.5" stroke-opacity="0.4"/>
+
+    <path d="M772,430 L742,502" stroke="#0c0a09" stroke-width="40" stroke-linecap="round"/>
+    <path d="M828,430 L858,502" stroke="#0c0a09" stroke-width="40" stroke-linecap="round"/>
+
+    <circle cx="800" cy="222" r="34" fill="#0c0a09" stroke="#dba63c" stroke-width="1.5" stroke-opacity="0.45"/>
+    <rect x="786" y="248" width="28" height="18" fill="#0c0a09"/>
+  </g>
+
+  <g class="headband">
+    <path d="M770,206 Q800,188 830,206" stroke="#0d5c3a" stroke-width="11" fill="none" stroke-linecap="round"/>
+    <circle cx="800" cy="195" r="7" fill="#a8291f"/>
+  </g>
+
+  <text x="800" y="88" text-anchor="middle" class="title-bn" font-size="58" font-weight="700" fill="#dba63c">সত্যQR</text>
+  <text x="800" y="122" text-anchor="middle" class="title-en" font-family="Georgia,'Times New Roman',serif" font-size="19" letter-spacing="7" fill="#f3ead9">S H O T T O Q R</text>
+
+  <text x="800" y="478" text-anchor="middle" class="tagline" font-size="20" fill="#d9cdb2">সত্য মুছে যায় না। <tspan fill="#8a6a2c">The truth doesn't erase.</tspan></text>
+
+  <g class="pill" transform="translate(60,40)">
+    <rect x="0" y="0" width="230" height="34" rx="17" fill="#171310" stroke="#8a6a2c" stroke-width="1"/>
+    <circle cx="20" cy="17" r="4" fill="#8c1f1f" class="status-dot"/>
+    <text x="34" y="22" font-family="'Hind Siliguri','Segoe UI',sans-serif" font-size="13" fill="#d9cdb2">জুলাই ২০২৪ স্মৃতি</text>
+  </g>
+  <g class="pill" transform="translate(1310,40)">
+    <rect x="0" y="0" width="230" height="34" rx="17" fill="#171310" stroke="#8a6a2c" stroke-width="1"/>
+    <text x="18" y="22" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#d9cdb2">SHA-256 · sealed evidence</text>
+  </g>
+</svg>
