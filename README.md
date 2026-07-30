@@ -12,7 +12,7 @@
 [![Pitch Page](https://img.shields.io/badge/pitch%20page-live%20on%20GitHub%20Pages-dba63c?style=flat-square)](https://YOUR-USERNAME.github.io/YOUR-REPO/)
 [![License](https://img.shields.io/badge/license-MIT-black?style=flat-square)](#-license)
 
-**[▶ Live Demo](#) · [📖 API Docs](#-api-reference) · [🖥️ Admin Panel](#-admin-panel) · [📊 Command Center](#-national-transparency-dashboard) · [🕯️ Memorial Wall](#-জুলাই-স্মৃতি-july-memorial) · [🎬 Pitch Page](https://YOUR-USERNAME.github.io/YOUR-REPO/)**
+**[▶ Live Demo](https://drive.google.com/file/d/1hiw2udQpt2MrbmkOM2tB-p2y0IR2kPWO/view?usp=sharing) · [🎬 Pitch Page](https://drive.google.com/file/d/1h7tYCU5FEi9nHNihp_9CTriGRD0PBTyy/view?ts=6a6b90a0)**
 
 </div>
 
@@ -20,9 +20,9 @@
 
 ## ✊ The Problem
 
-In July 2024, Bangladesh lived through a month that changed the country. Almost immediately, the record of it became a battlefield. Photos were cropped to hide context. Injuries were staged or denied. Screenshots were doctored and re-shared as proof — especially once the internet shutdown made anything hard to check in real time. Victims' families were asked to prove their own tragedy with no tools to do so, and no neutral system existed to separate a real photograph of harm from a manipulated one, or to track what happened to a case after it was reported.
+In July 2024, Bangladesh lived through a month that changed the country. Almost immediately, the record of it became a battlefield. Photos were cropped to hide context. Injuries were staged or denied. Screenshots were doctored and re-shared as proof: especially once the internet shutdown made anything hard to check in real time. Victims' families were asked to prove their own tragedy with no tools to do so and no neutral system existed to separate a real photograph of harm from a manipulated one, or to track what happened to a case after it was reported.
 
-**ShottoQR (সত্যQR, "Truth QR")** exists to close that gap. It is a forensic evidence pipeline that tells you how trustworthy an image is *and why*, a cryptographically sealed certificate system that can be verified with nothing but a QR code — even with no internet — a transparent case-tracking system that follows a victim's journey from report to resolution without ever exposing their identity, a national transparency dashboard that turns that same data into district-level accountability, and a living bilingual memorial so July 2024 is remembered with facts attached to it, not just feeling.
+**ShottoQR (সত্যQR, "Truth QR")** exists to close that gap. It is a forensic evidence pipeline that tells you how trustworthy an image is *and why*, a cryptographically sealed certificate system that can be verified with nothing but a QR code, even with no internet, a transparent case-tracking system that follows a victim's journey from report to resolution without ever exposing their identity, a national transparency dashboard that turns that same data into district-level accountability, and a living bilingual memorial so July 2024 is remembered with facts attached to it, not just feeling.
 
 This isn't a hypothetical. It's a working system with 7 real forensic signals, a SHA-256 hash-chained seal plus a real Ed25519 digital signature, an **offline** QR verifier, one-click court-ready PDF certificates, a public transparency portal, an admin review workflow, and a role-based (never name-based) chain of custody log.
 
@@ -30,13 +30,8 @@ This isn't a hypothetical. It's a working system with 7 real forensic signals, a
 
 ## 🎬 See It Live
 
-**Pitch page:** the full bilingual, animated identity built for this project lives at **[YOUR-USERNAME.github.io/YOUR-REPO](https://YOUR-USERNAME.github.io/YOUR-REPO/)**, served straight from this repo's `/docs` folder via GitHub Pages. No install needed, judges can open it on a phone.
+**Pitch page:** the full bilingual, animated identity built for this project lives at **[https://github.com/Tahscene/SottoQR](https://drive.google.com/file/d/1hiw2udQpt2MrbmkOM2tB-p2y0IR2kPWO/view?usp=sharing)**, served straight from this repo's `/docs` folder via GitHub Pages. No install needed, judges can open it on a phone.
 
-**Product demo:**
-
-![ShottoQR walkthrough](./assets/demo.gif)
-
-*(record this yourself — see below — GitHub can't render a live product from a README)*
 
 <details>
 <summary><strong>How to enable the GitHub Pages link above</strong></summary>
@@ -47,7 +42,7 @@ This isn't a hypothetical. It's a working system with 7 real forensic signals, a
 4. GitHub gives you a URL like `https://your-username.github.io/your-repo/` within a minute or two.
 5. Replace every `YOUR-USERNAME.github.io/YOUR-REPO` in this README with that real URL.
 
-Note: GitHub Pages only serves static files. It's perfect for the pitch page above, but the actual app (FastAPI + SQLite) needs a real host — see [Deploying the App](#-deploying-the-app) below.
+Note: GitHub Pages only serves static files. It's perfect for the pitch page above, but the actual app (FastAPI + SQLite) needs a real host!
 
 </details>
 
