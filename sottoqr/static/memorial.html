@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>জুলাই শহীদ স্মৃতি প্রাচীর — সত্যQR</title>
+<!--
+  National Digital Memorial Wall (ADD-ONLY, standalone /memorial page).
+  Honours the martyrs of the July 2024 uprising: light a candle, leave a flower,
+  and post a moderated tribute. Candle/flower/tribute counts persist per device
+  via localStorage for the demo; for production, POST them to a moderated backend
+  (see INTEGRATION.md — /api/tribute). Nothing in your existing site changes.
+  Only well-documented names are seeded; families/admins add verified profiles.
+  Out of respect and privacy, no photographs are used — a candle/initials motif is.
+-->
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Baloo+Da+2:wght@700;800&family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--red:#D6001C;--red-dark:#8C0016;--yellow:#F5B700;--black:#0B0B0B;--panel:#141414;--panel-light:#1c1c1c;--ink:#EFE9DA;--green:#00693E;--muted:#8a857a;
+        --font-display:'Anton',sans-serif;--font-bn:'Baloo Da 2','Noto Sans Bengali',sans-serif;--font-body:'Noto Sans Bengali',sans-serif;--radius:8px;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:var(--font-body);color:var(--ink);
+       background:radial-gradient(1000px 600px at 50% -10%,rgba(140,0,22,.35),transparent 60%),var(--black);}
+  .wrap{max-width:1180px;margin:0 auto;padding:30px 22px 70px;}
+  /* hero */
+  .hero{text-align:center;padding:24px 0 10px;}
+  .flame{font-size:2.4rem;filter:drop-shadow(0 0 14px rgba(245,183,0,.7));animation:flick 2.4s infinite;}
+  @keyframes flick{0%,100%{transform:rotate(-2deg) scale(1);}50%{transform:rotate(2deg) scale(1.06);}}
+  .hero h1{font-family:var(--font-bn);font-size:2.1rem;margin:8px 0 4px;}
+  .hero .en{font-family:var(--font-display);letter-spacing:3px;color:var(--yellow);font-size:.7rem;}
+  .hero p{max-width:640px;margin:12px auto 0;opacity:.78;font-size:.95rem;}
+  .totals{display:flex;justify-content:center;gap:26px;margin:20px 0 6px;flex-wrap:wrap;}
+  .total b{font-family:var(--font-display);font-size:1.7rem;color:var(--yellow);}
+  .total span{font-size:.74rem;color:var(--muted);display:block;}
+  /* grid */
+  .wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:26px;}
+  .m-card{background:linear-gradient(180deg,var(--panel-light),#111);border:1px solid rgba(245,183,0,.16);
+          border-radius:var(--radius);padding:18px;display:flex;flex-direction:column;position:relative;overflow:hidden;}
+  .m-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--yellow));}
+  .m-top{display:flex;align-items:center;gap:12px;}
+  .m-ava{width:52px;height:52px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-family:var(--font-display);
+         font-size:1.2rem;color:var(--black);background:radial-gradient(circle at 40% 35%,#ffe08a,var(--yellow));border:2px solid var(--red);}
+  .m-name{font-family:var(--font-bn);font-size:1.15rem;line-height:1.1;}
+  .m-meta{font-size:.74rem;color:var(--muted);margin-top:3px;}
+  .m-story{font-size:.86rem;opacity:.86;margin:12px 0;line-height:1.5;flex:1;}
+  .m-verified{font-size:.66rem;color:#7fd9ae;border:1px solid rgba(0,105,62,.5);background:rgba(0,105,62,.14);
+              padding:2px 8px;border-radius:999px;align-self:flex-start;margin-bottom:10px;}
+  .m-actions{display:flex;gap:8px;}
+  .m-btn{flex:1;background:#0f0f0f;border:1px solid rgba(245,183,0,.28);color:var(--ink);border-radius:6px;
+         padding:9px 6px;font-family:inherit;font-size:.82rem;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center;gap:5px;}
+  .m-btn:hover{border-color:var(--yellow);background:#161616;}
+  .m-btn.lit{background:rgba(245,183,0,.16);border-color:var(--yellow);}
+  .m-btn b{font-family:var(--font-display);font-weight:400;}
+  .tribute-open{margin-top:8px;background:transparent;border:none;color:var(--muted);font-size:.74rem;cursor:pointer;text-decoration:underline;}
+  .tributes{margin-top:8px;font-size:.78rem;}
+  .trib{background:#0d0d0d;border-left:2px solid var(--red);padding:6px 9px;border-radius:4px;margin-top:6px;color:#d8d2c4;}
+  .trib small{color:var(--muted);display:block;font-size:.64rem;margin-top:2px;}
+  .trib-form{display:none;margin-top:8px;}
+  .trib-form.show{display:block;}
+  .trib-form textarea{width:100%;background:#0d0d0d;border:1px solid rgba(245,183,0,.25);color:var(--ink);border-radius:5px;padding:8px;font-family:inherit;font-size:.8rem;resize:vertical;min-height:52px;}
+  .trib-form .row{display:flex;gap:6px;margin-top:6px;}
+  .trib-form input{flex:1;background:#0d0d0d;border:1px solid rgba(245,183,0,.25);color:var(--ink);border-radius:5px;padding:7px;font-family:inherit;font-size:.78rem;}
+  .trib-form button{background:var(--red);color:#fff;border:none;border-radius:5px;padding:7px 12px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.78rem;}
+  .pending{font-size:.66rem;color:var(--yellow);margin-top:5px;}
+  .add-note{text-align:center;margin-top:30px;font-size:.78rem;color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="flame">🕯️</div>
+    <h1>জুলাই শহীদ স্মৃতি প্রাচীর</h1>
+    <div class="en">JULY MARTYRS · MEMORIAL WALL</div>
+    <p>যাঁরা ২০২৪-এর জুলাই অভ্যুত্থানে জীবন দিয়েছেন, তাঁদের স্মরণে। একটি মোমবাতি জ্বালান, একটি ফুল রাখুন, শ্রদ্ধা জানান।</p>
+    <div class="totals">
+      <div class="total"><b id="tCandles">0</b><span>মোমবাতি</span></div>
+      <div class="total"><b id="tFlowers">0</b><span>ফুল</span></div>
+      <div class="total"><b id="tTributes">0</b><span>শ্রদ্ধাঞ্জলি</span></div>
+    </div>
+  </div>
+
+  <div class="wall" id="wall"></div>
+
+  <p class="add-note">পরিবার বা অ্যাডমিন যাচাইকৃত প্রোফাইল যোগ করতে পারেন। শ্রদ্ধাঞ্জলি মডারেশনের পর প্রকাশিত হয়।</p>
+</div>
+
+<script>
+// Seeded with only well-documented names, stated factually and respectfully.
+// Admins/families add more (ideally from the verified archive). No photos used.
+const MARTYRS = [
+  { id:"abu-sayed", name:"আবু সাঈদ", meta:"১৬ জুলাই ২০২৪ · রংপুর · বেরোবি",
+    story:"দুই হাত ছড়িয়ে নিরস্ত্র দাঁড়িয়ে ছিলেন। আন্দোলনের অন্যতম প্রথম শহীদ, যাঁর ছবি সারা দেশকে জাগিয়ে তোলে।", verified:true },
+  { id:"mugdho", name:"মীর মাহফুজুর রহমান মুগ্ধ", meta:"১৮ জুলাই ২০২৪ · উত্তরা · ঢাকা",
+    story:"আন্দোলনকারীদের মাঝে পানি ও বিস্কুট বিলি করছিলেন — ‘পানি লাগবে, পানি’। সেই অবস্থাতেই শহীদ হন।", verified:true },
+  { id:"unnamed-1", name:"নাম না জানা শহীদ", meta:"জুলাই ২০২৪ · বাংলাদেশ",
+    story:"শত শত মানুষ, যাঁদের নাম এখনও নথিভুক্ত হয়নি। তাঁদের প্রত্যেকের জন্য একটি শিখা।", verified:false },
+  { id:"unnamed-2", name:"নাম না জানা শহীদ", meta:"জুলাই ২০২৪ · বাংলাদেশ",
+    story:"প্রতিটি জেলার রাজপথে যাঁরা প্রাণ দিয়েছেন — তাঁদের স্মরণে এই প্রাচীর উন্মুক্ত।", verified:false },
+];
+
+// ---- storage (per-device demo; production: moderated backend) ----
+const KEY = "sottoqr_memorial_v1";
+function load(){ try{ return JSON.parse(localStorage.getItem(KEY)||"{}"); }catch(e){ return {}; } }
+function save(s){ try{ localStorage.setItem(KEY, JSON.stringify(s)); }catch(e){} }
+let STATE = load();
+function rec(id){ return STATE[id] || (STATE[id]={candles:0,flowers:0,tributes:[],lit:false,flowered:false}); }
+
+// very light client-side moderation for the demo
+const BLOCK = ["fuck","shit","bitch","হারামি","কুত্তা"];
+function clean(t){ let ok=true; const low=t.toLowerCase(); BLOCK.forEach(w=>{ if(low.includes(w)) ok=false; }); return ok; }
+function esc(s){ return String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+
+function initials(name){ const p=name.trim().split(/\s+/); return (p[0][0]||"")+(p.length>1?p[p.length-1][0]:""); }
+
+function totals(){
+  let c=0,f=0,t=0; Object.values(STATE).forEach(r=>{ c+=r.candles||0; f+=r.flowers||0; t+=(r.tributes||[]).length; });
+  document.getElementById("tCandles").textContent=c.toLocaleString("bn-BD");
+  document.getElementById("tFlowers").textContent=f.toLocaleString("bn-BD");
+  document.getElementById("tTributes").textContent=t.toLocaleString("bn-BD");
+}
+
+function cardHTML(m){
+  const r=rec(m.id);
+  const tribs=(r.tributes||[]).slice(-3).map(x=>`<div class="trib">${esc(x.msg)}<small>— ${esc(x.name||"অজ্ঞাত")}</small></div>`).join("");
+  return `<div class="m-card" data-id="${m.id}">
+    <div class="m-top"><div class="m-ava">${esc(initials(m.name))}</div>
+      <div><div class="m-name">${esc(m.name)}</div><div class="m-meta">${esc(m.meta)}</div></div></div>
+    ${m.verified?'<div class="m-verified" style="margin-top:12px;">✔ যাচাইকৃত সূত্র</div>':""}
+    <div class="m-story">${esc(m.story)}</div>
+    <div class="m-actions">
+      <button class="m-btn cbtn ${r.lit?"lit":""}">🕯️ <span>মোমবাতি</span> <b class="cc">${r.candles||0}</b></button>
+      <button class="m-btn fbtn ${r.flowered?"lit":""}">🌼 <span>ফুল</span> <b class="fc">${r.flowers||0}</b></button>
+    </div>
+    <button class="tribute-open">✍️ শ্রদ্ধাঞ্জলি লিখুন</button>
+    <div class="trib-form">
+      <textarea placeholder="আপনার শ্রদ্ধার বার্তা…" maxlength="240"></textarea>
+      <div class="row"><input type="text" placeholder="আপনার নাম (ঐচ্ছিক)" maxlength="40"><button class="tsend">পাঠান</button></div>
+      <div class="pending" style="display:none;">✓ ধন্যবাদ — মডারেশনের পর প্রকাশিত হবে।</div>
+    </div>
+    <div class="tributes">${tribs}</div>
+  </div>`;
+}
+
+function render(){
+  document.getElementById("wall").innerHTML = MARTYRS.map(cardHTML).join("");
+  totals();
+}
+
+document.addEventListener("click", e=>{
+  const card=e.target.closest(".m-card"); if(!card) return;
+  const id=card.dataset.id, r=rec(id);
+  if(e.target.closest(".cbtn")){ if(!r.lit){ r.candles=(r.candles||0)+1; r.lit=true;
+      card.querySelector(".cc").textContent=r.candles; card.querySelector(".cbtn").classList.add("lit"); save(STATE); totals(); } }
+  else if(e.target.closest(".fbtn")){ if(!r.flowered){ r.flowers=(r.flowers||0)+1; r.flowered=true;
+      card.querySelector(".fc").textContent=r.flowers; card.querySelector(".fbtn").classList.add("lit"); save(STATE); totals(); } }
+  else if(e.target.closest(".tribute-open")){ card.querySelector(".trib-form").classList.toggle("show"); }
+  else if(e.target.closest(".tsend")){
+    const form=card.querySelector(".trib-form");
+    const msg=form.querySelector("textarea").value.trim();
+    const name=form.querySelector("input").value.trim();
+    if(!msg) return;
+    if(!clean(msg)){ alert("বার্তায় অনুপযুক্ত শব্দ শনাক্ত হয়েছে।"); return; }
+    r.tributes=r.tributes||[]; r.tributes.push({msg,name,at:Date.now()}); save(STATE);
+    form.querySelector("textarea").value=""; form.querySelector("input").value="";
+    form.querySelector(".pending").style.display="block";
+    // reflect immediately (demo). In production this waits for moderation.
+    const box=card.querySelector(".tributes");
+    box.innerHTML += `<div class="trib">${esc(msg)}<small>— ${esc(name||"অজ্ঞাত")}</small></div>`;
+    totals();
+  }
+});
+
+render();
+</script>
+</body>
+</html>

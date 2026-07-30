@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="bn" lang-mode="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SottoQR Admin - Justice Tracker</title>
+<link rel="icon" type="image/jpeg" href="/static/img/logo.jpg" />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@600;700;800&family=Anton&family=Noto+Sans+Bengali:wght@400;600;700&family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/style.css" />
+<style>
+  body { background: var(--black); }
+  .admin-wrap { max-width: 900px; margin: 0 auto; padding: 40px 24px 100px; }
+  .admin-header { display:flex; align-items:center; gap:12px; margin-bottom: 30px; }
+  .admin-header img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+  .admin-panel { background: var(--panel); border: 1px solid rgba(245,183,0,0.25); border-radius: 8px; padding: 26px; margin-bottom: 30px; }
+  .admin-panel h2 { font-size: 1.2rem; color: var(--ink); margin-bottom: 6px; }
+  .admin-panel .hint { font-size: 0.85rem; color: #a9a396; margin-bottom: 18px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .form-row.full { grid-template-columns: 1fr; }
+  input[type=text], textarea, select {
+    width: 100%; background: #0f0f0f; border: 1px solid rgba(245,183,0,0.3); color: var(--ink);
+    padding: 10px 12px; border-radius: 4px; font-family: inherit; font-size: 0.9rem;
+  }
+  textarea { min-height: 70px; resize: vertical; }
+  label { font-size: 0.8rem; color: #a9a396; display: block; margin-bottom: 4px; }
+  .checkbox-row { display: flex; align-items: center; gap: 8px; margin: 10px 0; }
+  .checkbox-row input { width: auto; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.86rem; }
+  th { color: var(--yellow); font-weight: 700; font-size: 0.78rem; text-transform: uppercase; }
+  .msg { font-size: 0.85rem; margin-top: 10px; padding: 8px 12px; border-radius: 4px; }
+  .msg.ok { background: rgba(0,105,62,0.2); color: #7fd9ae; }
+  .msg.err { background: rgba(214,0,28,0.2); color: #ff9a9a; }
+  select.status-select { min-width: 170px; }
+  .pill { padding: 3px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; border: 1px solid rgba(245,183,0,0.3); }
+</style>
+</head>
+<body>
+<div class="admin-wrap">
+  <div class="admin-header">
+    <img src="/static/img/logo.jpg" alt="SottoQR" />
+    <div>
+      <div style="font-family:var(--font-display-bn); font-weight:800; font-size:1.2rem; color:var(--ink);">সত্যQR Admin</div>
+      <div style="font-size:0.8rem; color:var(--yellow);">Justice Tracker management, no API tools needed</div>
+    </div>
+    <a href="/" style="margin-left:auto; color: var(--yellow); font-size:0.85rem; font-weight:600;">&larr; Back to site</a>
+  </div>
+
+  <div class="admin-panel">
+    <h2>নতুন কেস তৈরি করুন</h2>
+    <p class="hint">Location আর summary-তে ভুক্তভোগীর নাম/NID লিখবেন না, শুধু ঘটনার তথ্য।</p>
+    <form id="caseForm">
+      <div class="form-row">
+        <div>
+          <label>Case Reference (optional, auto-generated if left blank)</label>
+          <input type="text" id="caseRef" />
+        </div>
+        <div>
+          <label>Location</label>
+          <input type="text" id="caseLocation" />
+        </div>
+      </div>
+      <div class="form-row full">
+        <div>
+          <label>Incident Summary</label>
+          <textarea id="caseSummary"></textarea>
+        </div>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="caseIsPublic" checked />
+        <label style="margin:0;">এখনই Public Transparency Portal-এ দেখাও</label>
+      </div>
+      <button type="submit" class="btn btn-primary">কেস তৈরি করুন</button>
+      <div id="caseFormMsg"></div>
+    </form>
+  </div>
+
+  <div class="admin-panel">
+    <h2>সব কেস</h2>
+    <p class="hint">Status বদলাতে dropdown ব্যবহার করুন, সাথে সাথে সেভ হবে।</p>
+    <table id="casesTable">
+      <thead><tr><th>Ref</th><th>Location</th><th>Public?</th><th>Status</th><th>Updated By (Agency)</th></tr></thead>
+      <tbody id="casesTbody"><tr><td colspan="4" class="hint">Loading...</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="admin-panel">
+    <h2>Evidence-কে Case-এর সাথে যুক্ত করুন</h2>
+    <p class="hint">যাচাই করা কোনো ছবিকে একটা কেসের প্রমাণ হিসেবে সংযুক্ত করুন।</p>
+    <form id="linkForm">
+      <div class="form-row">
+        <div>
+          <label>Case</label>
+          <select id="linkCaseSelect"></select>
+        </div>
+        <div>
+          <label>Evidence (by ID / filename / verdict)</label>
+          <select id="linkEvidenceSelect"></select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-outline">সংযুক্ত করুন</button>
+      <div id="linkFormMsg"></div>
+    </form>
+  </div>
+</div>
+
+<script src="/static/js/admin.js"></script>
+</body>
+</html>

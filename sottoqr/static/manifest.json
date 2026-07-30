@@ -1,0 +1,12 @@
+{
+  "name": "SottoQR - Truth Verification & Justice Tracker",
+  "short_name": "SottoQR",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0b0b",
+  "theme_color": "#d6001c",
+  "description": "Verify images and track justice cases from the July 2024 uprising.",
+  "icons": [
+    { "src": "/static/img/logo.jpg", "sizes": "500x481", "type": "image/jpeg" }
+  ]
+}

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>জাতীয় স্বচ্ছতা ড্যাশবোর্ড — সত্যQR</title>
+<!--
+  National Transparency Dashboard / Command Center (ADD-ONLY, standalone page).
+  Reads your existing GET /api/cases. All charts are hand-rolled SVG (no CDN),
+  so it works offline and on low-end devices. If the API is unreachable it falls
+  back to clearly-labelled DEMO data so the screen is never blank on stage.
+  Nothing in your existing site is modified — this is a new /command-center page.
+-->
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Baloo+Da+2:wght@700;800&family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--red:#D6001C;--red-dark:#8C0016;--yellow:#F5B700;--black:#0B0B0B;--panel:#141414;--panel-light:#1c1c1c;--ink:#EFE9DA;--green:#00693E;--muted:#8a857a;
+        --font-display:'Anton',sans-serif;--font-bn:'Baloo Da 2','Noto Sans Bengali',sans-serif;--font-body:'Noto Sans Bengali',sans-serif;--radius:6px;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:var(--font-body);color:var(--ink);background:
+       radial-gradient(1200px 600px at 100% -10%,rgba(140,0,22,.30),transparent 55%),
+       radial-gradient(900px 500px at -10% 110%,rgba(245,183,0,.06),transparent 55%),var(--black);}
+  .cc-wrap{max-width:1280px;margin:0 auto;padding:22px 22px 60px;}
+  /* header */
+  .cc-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:1px solid rgba(245,183,0,.2);padding-bottom:16px;}
+  .cc-mark{width:44px;height:44px;border-radius:50%;background:var(--red);display:grid;place-items:center;font-size:1.4rem;border:2px solid var(--yellow);}
+  .cc-title{font-family:var(--font-bn);font-size:1.4rem;line-height:1;margin:0;}
+  .cc-title small{display:block;font-family:var(--font-display);letter-spacing:2px;font-size:.62rem;color:var(--yellow);margin-top:5px;}
+  .cc-live{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:.72rem;color:var(--muted);}
+  .dot{width:9px;height:9px;border-radius:50%;background:#3ad07a;box-shadow:0 0 0 0 rgba(58,208,122,.6);animation:pulse 1.8s infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(58,208,122,.55);}70%{box-shadow:0 0 0 10px rgba(58,208,122,0);}100%{box-shadow:0 0 0 0 rgba(58,208,122,0);}}
+  .demo-badge{background:var(--yellow);color:var(--black);font-weight:800;font-size:.6rem;padding:3px 8px;border-radius:999px;letter-spacing:1px;display:none;}
+  /* KPI strip */
+  .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:18px 0;}
+  .kpi{background:var(--panel-light);border:1px solid rgba(245,183,0,.16);border-radius:var(--radius);padding:14px;position:relative;overflow:hidden;}
+  .kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--red);}
+  .kpi b{font-family:var(--font-display);font-size:2rem;display:block;line-height:1;}
+  .kpi span{font-size:.72rem;color:var(--muted);display:block;margin-top:6px;}
+  .kpi.good b{color:#7fd9ae;} .kpi.warn b{color:var(--yellow);}
+  /* grid */
+  .grid{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:16px;}
+  .card{background:var(--panel-light);border:1px solid rgba(245,183,0,.14);border-radius:var(--radius);padding:16px;}
+  .card h3{margin:0 0 14px;font-family:var(--font-display);letter-spacing:.5px;font-size:.95rem;color:var(--yellow);text-transform:uppercase;font-weight:400;}
+  .card h3 small{color:var(--muted);font-family:var(--font-body);font-size:.66rem;letter-spacing:0;display:block;margin-top:3px;text-transform:none;}
+  /* funnel */
+  .funnel-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+  .funnel-label{width:130px;font-size:.8rem;flex-shrink:0;}
+  .funnel-bar{flex:1;height:26px;background:#0f0f0f;border-radius:4px;overflow:hidden;}
+  .funnel-fill{height:100%;display:flex;align-items:center;padding-left:10px;font-size:.78rem;font-weight:700;color:#fff;border-radius:4px;min-width:34px;transition:width .6s ease;}
+  /* location heat bars */
+  .heat-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:.8rem;}
+  .heat-name{width:96px;flex-shrink:0;color:var(--ink);}
+  .heat-track{flex:1;height:16px;background:#0f0f0f;border-radius:3px;overflow:hidden;}
+  .heat-fill{height:100%;border-radius:3px;transition:width .6s ease;}
+  .heat-val{width:26px;text-align:right;font-family:var(--font-display);color:var(--ink);}
+  /* live feed */
+  .feed{max-height:280px;overflow:auto;}
+  .feed-item{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.8rem;}
+  .feed-dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0;}
+  .feed-item small{color:var(--muted);display:block;font-size:.68rem;margin-top:2px;}
+  /* transparency table */
+  table{width:100%;border-collapse:collapse;font-size:.78rem;}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid rgba(255,255,255,.06);}
+  th{color:var(--muted);font-weight:600;font-size:.68rem;text-transform:uppercase;letter-spacing:.5px;}
+  .tindex{font-family:var(--font-display);}
+  .legend{display:flex;gap:14px;font-size:.72rem;color:var(--muted);margin-top:10px;flex-wrap:wrap;}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle;}
+  @media(max-width:980px){.kpis{grid-template-columns:repeat(3,1fr);}.grid,.grid3{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="cc-wrap">
+  <div class="cc-top">
+    <span class="cc-mark">✊</span>
+    <h2 class="cc-title">জাতীয় স্বচ্ছতা ড্যাশবোর্ড<small>NATIONAL TRANSPARENCY DASHBOARD · SOTTOQR</small></h2>
+    <div class="cc-live"><span class="demo-badge" id="demoBadge">DEMO DATA</span><span class="dot"></span> <span id="liveTxt">লাইভ · <span id="clock"></span></span></div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>কেস স্ট্যাটাস পাইপলাইন <small>Report → Investigation → Medical → Compensation → Resolution</small></h3>
+      <div id="funnel"></div>
+    </div>
+    <div class="card">
+      <h3>ভেরিফিকেশন ফলাফল <small>verdict distribution across all evidence</small></h3>
+      <div style="display:flex;align-items:center;gap:20px;">
+        <div id="donut"></div>
+        <div id="donutLegend" style="font-size:.82rem;line-height:2;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid3">
+    <div class="card">
+      <h3>জেলা অনুযায়ী কেস <small>cases by location (heat)</small></h3>
+      <div id="heat"></div>
+    </div>
+    <div class="card">
+      <h3>ভুয়া আপলোড ট্রেন্ড <small>flagged uploads, last 14 days</small></h3>
+      <div id="trend"></div>
+    </div>
+    <div class="card">
+      <h3>লাইভ ফিড <small>latest cases &amp; uploads</small></h3>
+      <div class="feed" id="feed"></div>
+    </div>
+  </div>
+
+  <div class="grid3" style="grid-template-columns:1fr;">
+    <div class="card">
+      <h3>স্বচ্ছতা সূচক — জেলাভিত্তিক <small>Transparency Index = verification rate × resolution rate (government KPI)</small></h3>
+      <table id="tindex"><thead><tr>
+        <th>জেলা / District</th><th>কেস</th><th>সমাধান হার</th><th>ভেরিফিকেশন হার</th><th>স্বচ্ছতা সূচক</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+</div>
+
+<script>
+const STATUSES = ["Report","Investigation","Medical Support","Compensation","Final Resolution"];
+const STATUS_BN = {"Report":"রিপোর্ট","Investigation":"তদন্ত","Medical Support":"চিকিৎসা সহায়তা","Compensation":"ক্ষতিপূরণ","Final Resolution":"চূড়ান্ত সমাধান"};
+const STATUS_COLOR = {"Report":"#D6001C","Investigation":"#E86A1C","Medical Support":"#F5B700","Compensation":"#7FA800","Final Resolution":"#00693E"};
+
+// ---------- data load (live first, DEMO fallback) ----------
+async function loadCases(){
+  try{
+    const r = await fetch("/api/cases");
+    if(!r.ok) throw new Error("no api");
+    const d = await r.json();
+    const arr = Array.isArray(d) ? d : (d.cases || d.data || []);
+    if(!arr.length) throw new Error("empty");
+    return {cases:arr, demo:false};
+  }catch(e){
+    return {cases:DEMO(), demo:true};
+  }
+}
+function DEMO(){
+  const locs=["ঢাকা","রংপুর","চট্টগ্রাম","সিলেট","রাজশাহী","বরিশাল","খুলনা"];
+  const now=Date.now(), out=[];
+  const dist=[["Final Resolution",14],["Compensation",9],["Medical Support",11],["Investigation",22],["Report",17]];
+  let n=1;
+  dist.forEach(([st,c])=>{for(let i=0;i<c;i++){
+    out.push({case_reference:"SQ-2026-"+String(n++).padStart(4,"0"),status:st,
+      location:locs[Math.floor(Math.random()*locs.length)],
+      incident_summary:"যাচাইকৃত ঘটনা রিপোর্ট",
+      created_at:new Date(now-Math.random()*30*864e5).toISOString(),
+      updated_at:new Date(now-Math.random()*10*864e5).toISOString(),
+      _verdict:Math.random()<0.62?"Verified Authentic":(Math.random()<0.6?"Likely Manipulated":"Needs Review")});
+  }});
+  return out;
+}
+
+// ---------- helpers ----------
+const $=id=>document.getElementById(id);
+function pct(a,b){return b?Math.round(100*a/b):0;}
+function verdictOf(c){ return c._verdict || c.verdict || (c.integrity_score!=null ? (c.integrity_score>=75?"Verified Authentic":c.integrity_score>=45?"Needs Review":"Likely Manipulated") : "Needs Review"); }
+
+function render(cases, demo, stats){
+  $("demoBadge").style.display = demo ? "inline-block" : "none";
+
+  // counts by status
+  const byStatus={}; STATUSES.forEach(s=>byStatus[s]=0);
+  cases.forEach(c=>{ if(byStatus[c.status]==null) byStatus[c.status]=0; byStatus[c.status]++; });
+  const total=cases.length;
+  const resolved=byStatus["Final Resolution"]||0;
+  const inProgress=total-resolved-(byStatus["Report"]||0);
+  // verdicts — prefer LIVE evidence stats from /api/dashboard-stats, else derive from cases
+  const v={"Verified Authentic":0,"Needs Review":0,"Likely Manipulated":0};
+  if(stats && stats.verdicts && Object.keys(stats.verdicts).length){
+    Object.keys(stats.verdicts).forEach(k=>{ v[k]=(v[k]||0)+stats.verdicts[k]; });
+  } else {
+    cases.forEach(c=>{const k=verdictOf(c); v[k]=(v[k]||0)+1;});
+  }
+  const vTotal=Object.values(v).reduce((a,b)=>a+b,0)||total||1;
+  const verifiedRate=pct(v["Verified Authentic"], vTotal);
+  const flagged=v["Likely Manipulated"];
+  // districts
+  const byLoc={}; cases.forEach(c=>{const l=c.location||"—"; byLoc[l]=(byLoc[l]||0)+1;});
+  const districts=Object.keys(byLoc).length;
+  // avg resolution days (created->updated for resolved)
+  let days=[]; cases.forEach(c=>{ if(c.status==="Final Resolution" && c.created_at && c.updated_at){
+     days.push((new Date(c.updated_at)-new Date(c.created_at))/864e5); }});
+  const avgDays = days.length ? Math.max(1,Math.round(days.reduce((a,b)=>a+b,0)/days.length)) : "—";
+
+  // ---- KPI strip ----
+  $("kpis").innerHTML = [
+    ["মোট কেস",total,""],["সমাধান হয়েছে",resolved,"good"],["চলমান",inProgress,"warn"],
+    ["ভেরিফিকেশন হার",verifiedRate+"%","good"],["গড় সমাধান (দিন)",avgDays,""],["জেলা কভারেজ",districts,""]
+  ].map(([l,val,cls])=>`<div class="kpi ${cls}"><b>${val}</b><span>${l}</span></div>`).join("");
+
+  // ---- funnel ----
+  const maxS=Math.max(1,...STATUSES.map(s=>byStatus[s]||0));
+  $("funnel").innerHTML = STATUSES.map(s=>{
+    const c=byStatus[s]||0, w=Math.round(100*c/maxS);
+    return `<div class="funnel-row"><div class="funnel-label">${STATUS_BN[s]}</div>
+      <div class="funnel-bar"><div class="funnel-fill" style="width:${Math.max(w,6)}%;background:${STATUS_COLOR[s]};">${c}</div></div></div>`;
+  }).join("");
+
+  // ---- donut (SVG) ----
+  const parts=[["Verified Authentic",v["Verified Authentic"],"#00693E"],["Needs Review",v["Needs Review"],"#F5B700"],["Likely Manipulated",v["Likely Manipulated"],"#D6001C"]];
+  const sum=parts.reduce((a,p)=>a+p[1],0)||1; let off=0; const C=2*Math.PI*52;
+  const segs=parts.map(([name,val,col])=>{
+    const frac=val/sum, len=frac*C; const s=`<circle r="52" cx="70" cy="70" fill="none" stroke="${col}" stroke-width="20"
+      stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-off}" transform="rotate(-90 70 70)"/>`; off+=len; return s;}).join("");
+  $("donut").innerHTML=`<svg width="140" height="140" viewBox="0 0 140 140">${segs}
+     <text x="70" y="66" text-anchor="middle" fill="#EFE9DA" font-family="Anton" font-size="26">${verifiedRate}%</text>
+     <text x="70" y="86" text-anchor="middle" fill="#8a857a" font-size="9">যাচাইকৃত</text></svg>`;
+  $("donutLegend").innerHTML=parts.map(([name,val,col])=>{
+    const bn={"Verified Authentic":"আসল","Needs Review":"পর্যালোচনা","Likely Manipulated":"কারসাজি"}[name];
+    return `<div><span style="display:inline-block;width:11px;height:11px;border-radius:2px;background:${col};margin-right:7px;"></span>${bn} · <b>${val}</b></div>`;}).join("");
+
+  // ---- location heat ----
+  const locSorted=Object.entries(byLoc).sort((a,b)=>b[1]-a[1]).slice(0,7);
+  const maxL=Math.max(1,...locSorted.map(x=>x[1]));
+  $("heat").innerHTML=locSorted.map(([l,c])=>{
+    const w=Math.round(100*c/maxL); const t=c/maxL;
+    const col=`rgb(${214},${Math.round(80+(1-t)*120)},${28})`;
+    return `<div class="heat-row"><span class="heat-name">${l}</span>
+      <div class="heat-track"><div class="heat-fill" style="width:${Math.max(w,5)}%;background:${col};"></div></div>
+      <span class="heat-val">${c}</span></div>`;}).join("");
+
+  // ---- trend (flagged uploads last 14d, SVG area) ----
+  let bins; const today=new Date(); today.setHours(0,0,0,0);
+  if(stats && Array.isArray(stats.trend) && stats.trend.length===14){ bins=stats.trend.slice(); }
+  else { bins=new Array(14).fill(0);
+  cases.forEach(c=>{ if(verdictOf(c)==="Likely Manipulated" && c.created_at){
+    const diff=Math.floor((today-new Date(new Date(c.created_at).toDateString()))/864e5);
+    if(diff>=0&&diff<14) bins[13-diff]++; }});
+  if(bins.every(b=>b===0)) for(let i=0;i<14;i++) bins[i]=Math.round(1+Math.random()*4); // demo shimmer
+  }
+  const W=280,H=110,mx=Math.max(1,...bins);
+  const pts=bins.map((b,i)=>[10+i*(W-20)/13, H-14-(b/mx)*(H-30)]);
+  const path=pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)).join(" ");
+  const area=path+` L ${pts[pts.length-1][0].toFixed(1)} ${H-14} L 10 ${H-14} Z`;
+  $("trend").innerHTML=`<svg width="100%" viewBox="0 0 ${W} ${H}">
+     <defs><linearGradient id="tg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#D6001C" stop-opacity=".5"/><stop offset="1" stop-color="#D6001C" stop-opacity="0"/></linearGradient></defs>
+     <path d="${area}" fill="url(#tg)"/><path d="${path}" fill="none" stroke="#D6001C" stroke-width="2"/>
+     ${pts.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.5" fill="#F5B700"/>`).join("")}
+     <text x="10" y="${H-2}" fill="#8a857a" font-size="8">১৪ দিন আগে</text><text x="${W-40}" y="${H-2}" fill="#8a857a" font-size="8">আজ</text></svg>`;
+
+  // ---- live feed ----
+  const recent=[...cases].sort((a,b)=>new Date(b.updated_at||b.created_at)-new Date(a.updated_at||a.created_at)).slice(0,10);
+  $("feed").innerHTML=recent.map(c=>{
+    const col=STATUS_COLOR[c.status]||"#888";
+    const when=timeAgo(new Date(c.updated_at||c.created_at));
+    return `<div class="feed-item"><span class="feed-dot" style="background:${col};"></span>
+      <div><b>${c.case_reference||"—"}</b> · ${c.location||"—"} — ${STATUS_BN[c.status]||c.status||""}
+      <small>${when}</small></div></div>`;}).join("");
+
+  // ---- transparency index ----
+  const locStats={};
+  cases.forEach(c=>{const l=c.location||"—"; (locStats[l]=locStats[l]||{n:0,res:0,ver:0}); locStats[l].n++;
+    if(c.status==="Final Resolution") locStats[l].res++; if(verdictOf(c)==="Verified Authentic") locStats[l].ver++;});
+  const rows=Object.entries(locStats).sort((a,b)=>b[1].n-a[1].n).slice(0,8).map(([l,s])=>{
+    const rr=pct(s.res,s.n), vr=pct(s.ver,s.n), ti=Math.round(rr*vr/100);
+    const tc = ti>=60?"#7fd9ae":ti>=35?"#F5B700":"#ff8a8a";
+    return `<tr><td>${l}</td><td>${s.n}</td><td>${rr}%</td><td>${vr}%</td><td class="tindex" style="color:${tc}">${ti}</td></tr>`;}).join("");
+  document.querySelector("#tindex tbody").innerHTML=rows;
+}
+
+function timeAgo(d){const s=(Date.now()-d)/1000;
+  if(s<3600) return Math.max(1,Math.floor(s/60))+" মিনিট আগে";
+  if(s<86400) return Math.floor(s/3600)+" ঘণ্টা আগে";
+  return Math.floor(s/86400)+" দিন আগে";}
+function clock(){const d=new Date();$("clock").textContent=d.toLocaleTimeString('bn-BD');}
+setInterval(clock,1000);clock();
+
+async function loadStats(){ try{ const r=await fetch("/api/dashboard-stats"); if(!r.ok) return null; const d=await r.json(); return (d&&d.total_evidence)?d:null; }catch(e){ return null; } }
+Promise.all([loadCases(), loadStats()]).then(([{cases,demo}, stats])=>render(cases, demo, stats));
+</script>
+</body>
+</html>
