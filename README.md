@@ -1,7 +1,6 @@
 <div align="center">
 
-# 🔴🟡 ShottoQR | সত্যQR
-### *Sealed Truth for an Unforgettable July*
+<img src="./assets/hero-animation.svg" alt="ShottoQR — সত্যQR — Sealed Truth for an Unforgettable July" width="100%" />
 
 **A forensic verification engine, a justice tracker, and a living memorial. Built for the survivors, journalists, and citizens of the July 2024 uprising, and for every movement that comes after it.**
 
