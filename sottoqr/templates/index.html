@@ -26,6 +26,10 @@
       <a class="section-link" href="#problem" data-i18n="navAbout">সমস্যা</a>
       <a class="section-link" href="#verify" data-i18n="navVerify">যাচাই করুন</a>
       <a class="section-link" href="#portal" data-i18n="navPortal">জাস্টিস ট্র্যাকার</a>
+      <a class="section-link" href="#timeline" data-i18n="navTimeline">টাইমলাইন</a>
+      <a class="section-link" href="#archive" data-i18n="navArchive">আর্কাইভ</a>
+      <a class="section-link" href="#about" data-i18n="navAboutUs">About Us</a>
+      <button class="ju-july-btn" id="openCal"><span data-i18n="julyBtn">জুলাই ক্যালেন্ডার</span></button>
       <div class="lang-switch">
         <button data-lang="bn" class="active">বাং</button>
         <button data-lang="en">EN</button>
@@ -127,6 +131,95 @@
   </div>
 </section>
 
+<section class="ju-section" id="timeline">
+  <div class="wrap">
+    <div class="ju-kicker" data-i18n="tlKicker">টাইমলাইন</div>
+    <h2 class="ju-title" data-i18n="tlTitle">৩৬ দিনের পথরেখা</h2>
+    <p class="ju-desc" data-i18n="tlDesc">শুরু থেকে পতন, প্রতিটি দিন একটি করে কার্ডে। মাউস দিয়ে টেনে ডান থেকে বাঁয়ে সরালে পরের দিনগুলো আসবে।</p>
+    <div class="ju-tl-hint"><span class="arrow">&#8672;</span><span data-i18n="tlHint">টেনে সরান, ডান থেকে বাঁ</span></div>
+    <div class="ju-rail" id="tlRail" tabindex="0" aria-label="July uprising timeline">
+      <div class="ju-track" id="tlTrack"></div>
+    </div>
+  </div>
+</section>
+
+<section class="ju-section alt" id="archive">
+  <div class="wrap">
+    <div class="ju-kicker" data-i18n="arKicker">যাচাই করা আর্কাইভ</div>
+    <h2 class="ju-title" data-i18n="arTitle">কবে, কোথায়, কী ঘটেছিল</h2>
+    <p class="ju-desc" data-i18n="arDesc">জুলাই বিপ্লবের যাচাই করা ঘটনার সংগ্রহ, প্রতিটি এন্ট্রির সাথে স্থান, তারিখ আর সূত্র। খুঁজুন বা ফিল্টার করুন।</p>
+    <div class="ju-arch-tools">
+      <input class="ju-search" id="archSearch" data-i18n-ph="arSearchPh" placeholder="ঘটনা, স্থান বা তারিখ খুঁজুন" />
+      <button class="ju-chip active" data-cat="all" data-i18n="arAll">সব</button>
+      <button class="ju-chip" data-cat="killing" data-i18n="arMartyr">শহীদ</button>
+      <button class="ju-chip" data-cat="turning" data-i18n="arTurning">মোড়</button>
+      <button class="ju-chip" data-cat="attack" data-i18n="arAttack">হামলা</button>
+    </div>
+    <div class="ju-arch-grid" id="archGrid"></div>
+    <p class="ju-arch-empty" id="archEmpty" style="display:none;" data-i18n="arEmpty">এই খোঁজে কিছু পাওয়া যায়নি।</p>
+  </div>
+</section>
+
+<section class="ju-section" id="about">
+  <div class="wrap">
+    <div class="ju-kicker" data-i18n="abKicker">আমাদের সম্পর্কে</div>
+    <h2 class="ju-title" data-i18n="abTitle">যে দল সত্যQR বানিয়েছে</h2>
+    <p class="ju-desc" data-i18n="abDesc">জুলাই গণঅভ্যুত্থান ২০২৪-এর স্মরণে, সত্য যাচাই আর ন্যায়বিচার ট্র্যাকিংয়ের একটি প্রকল্প।</p>
+    <div class="ju-team">
+      <div class="ju-member lead">
+        <div class="ju-lead-tag" data-i18n="abLeadTag">টিম লিড</div>
+        <div class="ju-avatar">MR</div>
+        <h3>Meherun Ritu</h3>
+        <div class="ju-role" data-i18n="abLead">দলনেতা &middot; Team Leader</div>
+        <div class="ju-inst">University of Liberal Arts Bangladesh (ULAB)</div>
+      </div>
+      <div class="ju-member">
+        <div class="ju-avatar">TS</div>
+        <h3>Tahsin Shuborna</h3>
+        <div class="ju-role" data-i18n="abMember">সদস্য &middot; Member</div>
+        <div class="ju-inst">Ahsanullah University of Science &amp; Technology (AUST)</div>
+      </div>
+      <div class="ju-member">
+        <div class="ju-avatar">SA</div>
+        <h3>Shahriar Hossain Arafat</h3>
+        <div class="ju-role" data-i18n="abMember">সদস্য &middot; Member</div>
+        <div class="ju-inst">Ahsanullah University of Science &amp; Technology (AUST)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ju-cal-overlay" id="calOverlay" role="dialog" aria-modal="true" aria-label="July calendar">
+  <div class="ju-cal">
+    <button class="ju-cal-close" id="calClose" aria-label="Close">&#10005;</button>
+    <div class="ju-cal-head">
+      <h2 data-i18n="calTitle">জুলাই বিপ্লব</h2>
+      <div class="sub" data-i18n="calSub">১ থেকে ৩৬ জুলাই ২০২৪</div>
+    </div>
+    <div class="ju-grid" id="calGrid"></div>
+  </div>
+</div>
+
+<div class="ju-day" id="dayModal" role="dialog" aria-modal="true">
+  <div class="ju-day-card">
+    <button class="ju-day-close" id="dayClose" aria-label="Close">&#10005;</button>
+    <div class="ju-day-band" id="dayBand"></div>
+    <div class="ju-day-inner">
+      <div class="ju-day-meta">
+        <span class="ju-day-num" id="dayNum"></span>
+        <span class="ju-day-greg" id="dayGreg"></span>
+        <span class="ju-day-badge" id="dayBadge"></span>
+      </div>
+      <h3 class="ju-day-t" id="dayTitle"></h3>
+      <p class="ju-day-x" id="dayText"></p>
+    </div>
+    <div class="ju-day-nav">
+      <button id="dayPrev" data-i18n="dayPrev">&#9664; আগের দিন</button>
+      <button id="dayNext" data-i18n="dayNext">পরের দিন &#9654;</button>
+    </div>
+  </div>
+</div>
+
 <footer class="footer">
   <div class="wrap footer-inner">
     <div class="footer-brand">
@@ -136,7 +229,7 @@
         <small data-i18n="footerNote">জুলাই গণঅভ্যুত্থান ২০২৪-এর স্মরণে নির্মিত।</small>
       </div>
     </div>
-    <a href="/admin" style="font-size:0.75rem; color:#665; opacity:0.6;">Admin</a>
+    <a href="/admin" style="font-size:0.8rem; color: var(--yellow); opacity:0.85; font-weight:600;">Admin</a>
   </div>
 </footer>
 

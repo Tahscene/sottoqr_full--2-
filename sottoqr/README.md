@@ -160,3 +160,24 @@ never a name - so the accountability trail doesn't cost anyone their safety.
 Note: CNN/pretrained model signal was tried and then dropped per your call - GPU inference
 adds real deployment risk for a hackathon demo, and the heuristic signals already cover most
 of the dataset's manipulation types. This is documented as an honest limitation, not hidden.
+
+## July Interactive Calendar, Timeline, Archive, About Us
+
+Added from the team's own hand-built feature file, integrated into the existing
+site (same dark red/yellow/black identity, same I18N pattern). New sections:
+
+- **Timeline** (`#timeline`) - horizontal drag-to-scroll, one card per day, 1 to 36 July 2024
+- **Archive** (`#archive`) - searchable/filterable verified-event cards (only days with
+  a location + source show up here, drawn from the same JULY data array)
+- **About Us** (`#about`) - Meherun Ritu (Team Lead, ULAB), Tahsin Shuborna (AUST),
+  Shahriar Hossain Arafat (AUST)
+- **Interactive Calendar** - "জুলাই ক্যালেন্ডার" button in the nav opens a modal grid
+  (1 to 36 July), click any date for a detail popup with prev/next day navigation
+
+All event data lives in the `JULY` array near the bottom of `static/js/main.js` -
+edit the `bn`/`en` text objects per day to adjust wording, tag (`protest` / `attack` /
+`turning` / `killing` / `fall`), or add `loc_bn`/`loc_en`/`src` to make a day show up
+in the Archive section too.
+
+Tested end to end with Playwright: no console/page errors, drag-scroll confirmed
+working, calendar modal + day detail modal open/close and navigate correctly.
