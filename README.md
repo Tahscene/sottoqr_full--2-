@@ -1,6 +1,8 @@
 <div align="center">
 
-<img src="./assets/hero-animation.svg" alt="ShottoQR — সত্যQR — Sealed Truth for an Unforgettable July" width="100%" />
+<a href="https://youtu.be/oMPBr9XrcvE">
+  <img src="assets/demo-thumbnail.png.png" width="900" alt="Watch Demo">
+</a>
 
 **A forensic verification engine, a justice tracker, a national transparency dashboard, and a living memorial. Built for the survivors, journalists, and citizens of the July 2024 uprising, and for every movement that comes after it.**
 
@@ -11,9 +13,6 @@
 [![Bilingual](https://img.shields.io/badge/bilingual-বাংলা%20%2F%20English-D62828?style=flat-square)](#)
 [![License](https://img.shields.io/badge/license-MIT-black?style=flat-square)](#-license)
 
-<a href="https://youtu.be/oMPBr9XrcvE">
-  <img src="assets/demo-thumbnail.png" width="900" alt="Watch Demo">
-</a>
 
 
 **[▶ Live Demo](https://testt-1-zguo.onrender.com/)**
