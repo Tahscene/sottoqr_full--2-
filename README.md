@@ -105,8 +105,8 @@ This section exists because the goal was never just to win a hackathon. It's to 
 * **Auditable by default.** Every seal, every view, every status change is logged and independently re-verifiable via QR, exactly the property an oversight ministry, a UN fact-finding mission, or an international press body needs before trusting a domestic system's output.
 * **Offline-first trust.** Verification does not require the internet, the server, or even this codebase to be online, only the public key and the signed manifest. That property matters most in exactly the conditions a crisis creates.
 * **Boring, resilient infrastructure.** SQLite to PostgreSQL is a one-line connection-string change when case volume demands it. The whole stack runs on commodity hardware.
-* **Honest forensics.** The system tells you what it can and can't detect (see below) instead of pretending to be an infallible lie detector — the property a government or international body needs before staking legal or diplomatic weight on a verified badge.
-* **Extendable to any future movement or disaster.** The July 2024 memorial and dashboard are a configuration of the architecture, not a hardcoded one-off. The same evidence-sealing, case-tracking, and transparency-index core could be repointed at any future crisis needing verifiable public record — an election, a disaster, a human rights investigation.
+* **Honest forensics.** The system tells you what it can and can't detect (see below) instead of pretending to be an infallible lie detector: the property a government or international body needs before staking legal or diplomatic weight on a verified badge.
+* **Extendable to any future movement or disaster.** The July 2024 memorial and dashboard are a configuration of the architecture, not a hardcoded one-off. The same evidence-sealing, case-tracking, and transparency-index core could be repointed at any future crisis needing verifiable public record: an election, a disaster, a human rights investigation.
 
 ---
 
@@ -116,9 +116,9 @@ Read this section out loud to the judges. It is a strength, not a weakness.
 
 **Reliably detected:** Blur, crop, brightness/contrast change, JPEG re-compression artifacts, screenshot resolution matches, missing/stripped EXIF, perceptual-hash reuse.
 **Partially detected:** Resized screenshots (exact-resolution screen dumps are caught reliably; a resized screenshot is harder). In-place rotate-and-crop edits with no canvas fill are harder to catch than rotate-and-expand edits, which do leave a detectable solid-colour corner fill.
-**Not a deepfake detector.** The optional AI-image heuristic included in the court-PDF export is an experimental screen, explicitly labelled as such — it is not a definitive synthetic-image or GPU-based forgery classifier, and none is shipped, because the added GPU/deployment risk wasn't worth it for a hackathon-scale accuracy gain against a dataset the heuristic signals already cover well.
+**Not a deepfake detector.** The optional AI-image heuristic included in the court-PDF export is an experimental screen, explicitly labelled as such, it is not a definitive synthetic-image or GPU-based forgery classifier, and none is shipped, because the added GPU/deployment risk wasn't worth it for a hackathon-scale accuracy gain against a dataset the heuristic signals already cover well.
 
-**The Integrity Score is decision support, not a verdict.** It ships with a visible, signal-by-signal reasons list so a human — a journalist, an investigator, a judge — makes the final call with evidence in front of them, not a black box.
+**The Integrity Score is decision support, not a verdict.** It ships with a visible, signal-by-signal reasons list so a human: a journalist, an investigator, a judge, makes the final call with evidence in front of them, not a black box.
 
 ---
 
@@ -129,47 +129,6 @@ Read this section out loud to the judges. It is a strength, not a weakness.
   <img src="./architecture.png" alt="ShottoQR System Architecture" width="100%">
 </p>
 
-## 🚀 Setup
-
-```bash
-pip install -r requirements.txt
-# or: pip install -r requirements.txt --break-system-packages
-
-# 1. Put dataset images in data/july/ (img0001.jpg ... img0030.jpg/png)
-#    data/labels_fixed.xlsx is already included
-
-python -m scripts.load_dataset     # Task 1: loads images + labels into the DB
-python -m scripts.test_pipeline    # Task 2: runs all 7 forensic signals, prints score separation
-python -m scripts.seal_all         # Task 3: seals every analyzed image with hash, QR, certificate
-
-uvicorn app.main:app --reload      # Full backend + frontend + dashboard + memorial
-```
-
-Then open **`http://localhost:8000/`**. The frontend is the homepage. Raw API docs stay available at **`/docs`**, the dashboard at **`/command-center`**, and the memorial wall at **`/memorial`**.
-
-Outputs land in `static/ela/`, `static/qr/`, `static/certificates/`, `static/exports/` (court PDFs).
-
-> **Demoing from Colab?** Colab can't hold a persistent public URL by default. Run the app in a cell and expose port 8000 with `pyngrok`, or point judges at a Render/Railway deploy of this repo (recommended for judging — see below). Set `PUBLIC_BASE_URL` before sealing new evidence so QR codes point at the live tunnel or deployment:
-> ```python
-> import os
-> os.environ["PUBLIC_BASE_URL"] = "https://your-ngrok-url.ngrok-free.app"
-> ```
-> Colab's disk wipes on disconnect, so export the database between sessions if you want to keep demo data.
-
-## 🌍 Deploying the App
-
-GitHub Pages only serves static files, so it's used here for the `/docs` pitch page — the actual FastAPI + SQLite app needs a real host:
-
-1. Push this repo to GitHub (see [Team](#-team) section for the `.gitignore` note on keys).
-2. On **[Render.com](https://render.com)**: New → Web Service → connect this repo.
-   - Build command: `pip install -r requirements.txt`
-   - Start command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-   - Instance type: Free
-3. Deploy — you get a permanent URL like `https://shottoqr.onrender.com` within a few minutes. That's your **Live Link**.
-
-Free-tier instances sleep after ~20 minutes idle; open the link once to "warm it up" shortly before a live demo or judging session.
-
----
 
 ## 📡 API Reference
 
@@ -209,37 +168,6 @@ Free-tier instances sleep after ~20 minutes idle; open the link once to "warm it
 
 `/memorial`: light a candle, leave a flower, or post a moderated tribute for the martyrs of July 2024. Respectful by design — no photographs, only well-documented names seeded, with light client-side moderation on tributes.
 
-## 🗂️ Project Structure
-
-```
-app/
-├─ database.py         SQLAlchemy engine/session
-├─ models.py            EvidenceImage + Case + CaseEvidence + CustodyLogEntry tables
-├─ forensics.py          7 forensic signals + combined Integrity Score
-├─ seal.py                SHA-256 seal, hash-chain ledger, QR generation, certificates
-├─ crypto_signing.py       Real Ed25519 signing/verification (offline-capable)
-├─ court_export.py          One-click court-ready evidence PDF generator
-├─ ai_detect.py               Optional, honestly-labelled AI-image heuristic
-└─ main.py                      FastAPI app — verification, justice tracker, dashboard, memorial, admin
-scripts/
-├─ load_dataset.py      Task 1
-├─ test_pipeline.py      Task 2
-├─ seal_all.py             Task 3
-└─ verify_offline.py         Standalone offline verifier (no server, no internet)
-static/
-├─ command-center.html   National Transparency Dashboard
-├─ memorial.html           July Memorial Wall
-├─ js/explainscore.js       Explainable Integrity Score breakdown
-├─ js/main.js                 Frontend logic + I18N + JULY archive data
-└─ css/style.css                 Visual identity
-templates/index.html · admin.html · verify_result.html   Bilingual frontend
-docs/index.html         GitHub Pages source (pitch page, see "See It Live" above)
-assets/demo.gif         Product walkthrough GIF embedded in this README
-```
-
-To add another judge-facing language (Hindi, Arabic, French, whoever is on the panel), add one key to every entry in the `I18N` object in `static/js/main.js` and a matching button in `.lang-switch` in `templates/index.html`.
-
----
 
 ## 👥 Team
 
