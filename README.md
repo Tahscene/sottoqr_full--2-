@@ -19,7 +19,6 @@
 
 </div>
 
----
 
 ## ✊ The Problem
 
@@ -29,7 +28,7 @@ In July 2024, Bangladesh lived through a month that changed the country. Almost 
 
 This isn't a hypothetical. It's a working system with 7 real forensic signals, a SHA-256 hash-chained seal plus a real Ed25519 digital signature, an **offline** QR verifier, one-click court ready PDF certificates, a public transparency portal, an admin review workflow, and a role based (never name based) chain of custody log.
 
----
+
 
 ## 📸 Platform Preview
 
@@ -84,7 +83,6 @@ This isn't a hypothetical. It's a working system with 7 real forensic signals, a
 * **Dark red, gold, and black visual identity** carried consistently from the homepage to the certificates themselves, with a faint fist watermark, so a sealed certificate is recognizably this movement's, not a generic template.
 * **PWA-ready**: installable, with an offline-first service worker for low-connectivity field use.
 
----
 
 ## 🏆 Why This Should Win *(mapped to the judging rubric)*
 
@@ -98,7 +96,7 @@ Scored against the 80% that isn't audience engagement, because a project should 
 | **Feasibility & resilience** | 10% | Runs on SQLite with no external services required. No GPU, no paid API keys: functional on a single low-end machine or a free-tier deploy (Render/Railway). Offline QR verification and a PWA shell mean the core trust mechanism survives exactly the condition that made July 2024 hard to document: an internet shutdown. |
 | **Presentation & usability** | 10% | One homepage: verification, reporting, the dashboard, and the memorial all live in a single bilingual interface a non-technical judge, or a non-technical victim's family member, can use unassisted. See the [pitch page](./docs/index.html) for the full visual identity. |
 
----
+
 
 ## 🇧🇩 Path to National Adoption
 
@@ -111,7 +109,6 @@ This section exists because the goal was never just to win a hackathon. It's to 
 * **Honest forensics.** The system tells you what it can and can't detect (see below) instead of pretending to be an infallible lie detector: the property a government or international body needs before staking legal or diplomatic weight on a verified badge.
 * **Extendable to any future movement or disaster.** The July 2024 memorial and dashboard are a configuration of the architecture, not a hardcoded one-off. The same evidence-sealing, case-tracking, and transparency-index core could be repointed at any future crisis needing verifiable public record: an election, a disaster, a human rights investigation.
 
----
 
 ## ⚠️ Known Limitations (built to be trusted, not oversold)
 
@@ -123,7 +120,7 @@ Read this section out loud to the judges. It is a strength, not a weakness.
 
 **The Integrity Score is decision support, not a verdict.** It ships with a visible, signal-by-signal reasons list so a human: a journalist, an investigator, a judge, makes the final call with evidence in front of them, not a black box.
 
----
+
 
 ## 🏗️ Architecture
 
@@ -180,13 +177,8 @@ Read this section out loud to the judges. It is a strength, not a weakness.
 | Tahsin Shuborna | AUST | Engineering | [@tahscene](https://github.com/tahscene) |
 | Shahriar Hossain Arafat | AUST | Engineering | [@ShArafat58](https://github.com/ShArafat58) |
 
-> Before pushing: add `keys/*.key` to `.gitignore` so the Ed25519 private key never lands in a public repo.
 
----
 
-## 📜 License
-
-MIT. Built to be forked by the next team that needs to protect the record of what actually happened.
 
 <div align="center">
 
