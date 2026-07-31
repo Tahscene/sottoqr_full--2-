@@ -125,12 +125,9 @@ Read this section out loud to the judges. It is a strength, not a weakness.
 ## 🏗️ Architecture
 
 
-
-**Stack:** FastAPI, SQLAlchemy, SQLite, vanilla JS/HTML/CSS frontend (bilingual I18N), Pillow forensics pipeline, PyNaCl (Ed25519), ReportLab (PDF export), `qrcode` + `jsQR` (offline scanning), PWA service worker.
-
-GitHub renders the diagram above automatically since it's a fenced ```mermaid``` block — no image export needed.
-
----
+<p align="center">
+  <img src="./architecture.png" alt="ShottoQR System Architecture" width="100%">
+</p>
 
 ## 🚀 Setup
 
