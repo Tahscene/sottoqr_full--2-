@@ -12,7 +12,7 @@
 [![Pitch Page](https://img.shields.io/badge/pitch%20page-live%20on%20GitHub%20Pages-dba63c?style=flat-square)](https://YOUR-USERNAME.github.io/YOUR-REPO/)
 [![License](https://img.shields.io/badge/license-MIT-black?style=flat-square)](#-license)
 
-**[▶ Live Demo](https://drive.google.com/file/d/1hiw2udQpt2MrbmkOM2tB-p2y0IR2kPWO/view?usp=sharing) · [🎬 Pitch Page](https://drive.google.com/file/d/1h7tYCU5FEi9nHNihp_9CTriGRD0PBTyy/view?ts=6a6b90a0)**
+**[▶ Live Demo](https://testt-1-zguo.onrender.com/) · [🎬 Pitch Page](https://drive.google.com/file/d/1hiw2udQpt2MrbmkOM2tB-p2y0IR2kPWO/view?usp=sharing)**
 
 </div>
 
@@ -30,7 +30,7 @@ This isn't a hypothetical. It's a working system with 7 real forensic signals, a
 
 ## 🎬 See It Live
 
-**Pitch page:** the full bilingual, animated identity built for this project lives at **[SottoQR](https://drive.google.com/file/d/1hiw2udQpt2MrbmkOM2tB-p2y0IR2kPWO/view?usp=sharing)**, served straight from this repo's `/docs` folder via GitHub Pages. No install needed, judges can open it on a phone.
+**Pitch page:** the full bilingual, animated identity built for this project lives at **[SottoQR]((https://testt-1-zguo.onrender.com/))**, served straight from this repo's `/docs` folder via GitHub Pages. No install needed, judges can open it on a phone.
 
 
 <details>
