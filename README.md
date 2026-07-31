@@ -9,7 +9,6 @@
 [![Layer 2](https://img.shields.io/badge/Layer%202-Justice%20Tracker-0D1B2A?style=flat-square)](#-layer-2--ন্যায়বিচার-justice-tracker)
 [![Offline Verify](https://img.shields.io/badge/verification-works%20offline-2E7D32?style=flat-square)](#-layer-1--সত্য-যাচাই-verification-engine)
 [![Bilingual](https://img.shields.io/badge/bilingual-বাংলা%20%2F%20English-D62828?style=flat-square)](#)
-[![Pitch Page](https://img.shields.io/badge/pitch%20page-live%20on%20GitHub%20Pages-dba63c?style=flat-square)](https://YOUR-USERNAME.github.io/YOUR-REPO/)
 [![License](https://img.shields.io/badge/license-MIT-black?style=flat-square)](#-license)
 
 **[▶ Live Demo](https://testt-1-zguo.onrender.com/) · [🎬 Pitch Page](https://drive.google.com/file/d/1hiw2udQpt2MrbmkOM2tB-p2y0IR2kPWO/view?usp=sharing)**
