@@ -30,7 +30,7 @@ This isn't a hypothetical. It's a working system with 7 real forensic signals, a
 
 ## 🎬 See It Live
 
-**Pitch page:** the full bilingual, animated identity built for this project lives at **[https://github.com/Tahscene/SottoQR](https://drive.google.com/file/d/1hiw2udQpt2MrbmkOM2tB-p2y0IR2kPWO/view?usp=sharing)**, served straight from this repo's `/docs` folder via GitHub Pages. No install needed, judges can open it on a phone.
+**Pitch page:** the full bilingual, animated identity built for this project lives at **[SottoQR](https://drive.google.com/file/d/1hiw2udQpt2MrbmkOM2tB-p2y0IR2kPWO/view?usp=sharing)**, served straight from this repo's `/docs` folder via GitHub Pages. No install needed, judges can open it on a phone.
 
 
 <details>
