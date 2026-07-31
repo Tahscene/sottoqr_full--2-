@@ -28,39 +28,19 @@ This isn't a hypothetical. It's a working system with 7 real forensic signals, a
 
 ---
 
-## 🎬 See It Live
+## 📸 Platform Preview
 
-**Pitch page:** the full bilingual, animated identity built for this project lives at **[SottoQR]((https://testt-1-zguo.onrender.com/))**, served straight from this repo's `/docs` folder via GitHub Pages. No install needed, judges can open it on a phone.
+<p align="center">
+  <img src="./Screenshot%202026-07-31%20123858.png" width="280" alt="Home Page"/>
+  <img src="./Screenshot%202026-07-31%20123907.png" width="280" alt="Verification Result"/>
+  <img src="./Screenshot%202026-07-31%20123915.png" width="280" alt="Certificate"/>
+</p>
 
-
-<details>
-<summary><strong>How to enable the GitHub Pages link above</strong></summary>
-
-1. Push this repo to GitHub, with `docs/index.html` included.
-2. Go to **Settings → Pages** on the repo.
-3. Under **Build and deployment**, set **Source: Deploy from a branch**, **Branch: main**, **Folder: /docs**. Save.
-4. GitHub gives you a URL like `https://your-username.github.io/your-repo/` within a minute or two.
-5. Replace every `YOUR-USERNAME.github.io/YOUR-REPO` in this README with that real URL.
-
-Note: GitHub Pages only serves static files. It's perfect for the pitch page above, but the actual app (FastAPI + SQLite) needs a real host!
-
-</details>
-
-<details>
-<summary><strong>How to record the demo GIF</strong></summary>
-
-1. Run the app locally (`uvicorn app.main:app --reload`) and open `http://localhost:8000/`.
-2. Screen-record a 20–40 second walkthrough: upload an image, watch the Explainable Integrity Score appear, open the certificate/QR, flip the language toggle.
-   Free tools: **ScreenToGif** (Windows), **Kap** (Mac), **Peek** (Linux), or any recorder + `ffmpeg`.
-3. Convert and shrink so it loads fast on GitHub:
-   ```bash
-   ffmpeg -i demo.mp4 -vf "fps=12,scale=800:-1:flags=lanczos" -loop 0 demo.gif
-   ```
-4. Save as `assets/demo.gif`. It renders automatically wherever `![ShottoQR walkthrough](./assets/demo.gif)` appears above.
-
-</details>
-
----
+<p align="center">
+  <img src="./Screenshot%202026-07-31%20124045.png" width="280" alt="Justice Tracker"/>
+  <img src="./Screenshot%202026-07-31%20124125.png" width="280" alt="Transparency Dashboard"/>
+  <img src="./Screenshot%202026-07-31%20124133.png" width="280" alt="Memorial"/>
+</p>
 
 ## 🧩 What It Does
 
