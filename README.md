@@ -66,8 +66,8 @@ Note: GitHub Pages only serves static files. It's perfect for the pitch page abo
 
 ### 🔍 Layer 1: সত্য যাচাই (Verification Engine)
 
-* **7-signal forensic analysis.** ELA, EXIF metadata check, blur/sharpness, histogram clipping, JPEG blockiness, rotation canvas-fill detection, and screenshot resolution matching — combined into one Integrity Score with a visible, human-readable reasons list. Never a black-box fake/real verdict.
-* **Explainable Integrity Score.** Every verdict opens into a signal-by-signal breakdown — each of the 7 signals shown with its own suspicion bar, a clean/suspicious/high-risk status pill, and exactly how many points it removed from the final score. A judge, a journalist, or a victim's family sees *why* a score is what it is, not just the number.
+* **7-signal forensic analysis.** ELA, EXIF metadata check, blur/sharpness, histogram clipping, JPEG blockiness, rotation canvas-fill detection, and screenshot resolution matching: combined into one Integrity Score with a visible, human-readable reasons list. Never a black-box fake/real verdict.
+* **Explainable Integrity Score.** Every verdict opens into a signal-by-signal breakdown: each of the 7 signals shown with its own suspicion bar, a clean/suspicious/high-risk status pill, and exactly how many points it removed from the final score. A judge, a journalist, or a victim's family sees *why* a score is what it is, not just the number.
 * **Reuse and duplicate detection.** Perceptual hashing (pHash) flags whether an uploaded image has circulated before, so recycled photos from other events can't be passed off as new evidence.
 * **Tamper-evident sealing.** Every verified image gets a SHA-256 seal recorded in an append-only hash chain, *plus* a real Ed25519 digital signature. Break one link and the whole chain fails verification.
 * **Offline-verifiable QR certificates.** A downloadable, watermarked certificate carries a QR code whose signature can be checked with nothing but the public key — no server, no database, no internet connection. This is what makes verification possible during an internet shutdown, which is exactly the condition July 2024 tested.
@@ -76,14 +76,14 @@ Note: GitHub Pages only serves static files. It's perfect for the pitch page abo
 
 ### ⚖️ Layer 2: ন্যায়বিচার (Justice Tracker)
 
-* **Public transparency feed.** Every case moves through five visible stages: **Report → তদন্ত (Investigation) → চিকিৎসা (Medical Support) → ক্ষতিপূরণ (Compensation) → চূড়ান্ত সমাধান (Final Resolution)**. Anyone — a victim's family, a journalist, an oversight body — can see exactly where a case stands without asking.
+* **Public transparency feed.** Every case moves through five visible stages: **Report → তদন্ত (Investigation) → চিকিৎসা (Medical Support) → ক্ষতিপূরণ (Compensation) → চূড়ান্ত সমাধান (Final Resolution)**. Anyone — a victim's family, a journalist, an oversight body: can see exactly where a case stands without asking.
 * **Anonymous public reporting.** Zero identifying information required. Reports land in an admin queue as private by default, and only reach the public feed after human review.
-* **Deliberate PII omission.** Victim name, NID, and phone number are not fields in the data model at all — not hidden, not encrypted, simply never collected, because that kind of data needs an access-controlled government system, not a hackathon database. `case_reference` is the only public-safe lookup identifier.
+* **Deliberate PII omission.** Victim name, NID, and phone number are not fields in the data model at all: not hidden, not encrypted, simply never collected, because that kind of data needs an access-controlled government system, not a hackathon database. `case_reference` is the only public-safe lookup identifier.
 * **Admin panel.** Full case lifecycle management: create cases, update status, approve or reject public reports, link sealed evidence to a case.
 
 ### 📊 National Transparency Dashboard *(Command Center)*
 
-* A ministry-grade, single-screen overview built entirely from the same case and evidence data above: live KPIs, a five-stage status funnel, a district heatmap, a 14-day flagged-upload trend, a live case feed, and a per-district **Transparency Index** (verification rate × resolution rate) — a metric an oversight ministry could actually be held to.
+* A ministry-grade, single-screen overview built entirely from the same case and evidence data above: live KPIs, a five-stage status funnel, a district heatmap, a 14-day flagged-upload trend, a live case feed, and a per-district **Transparency Index** (verification rate × resolution rate): a metric an oversight ministry could actually be held to.
 * Reads live from the API. If the API or database isn't reachable, it falls back to a clearly labelled **DEMO DATA** view so a screen is never blank mid-presentation.
 * Reachable at `/command-center`.
 
@@ -92,14 +92,14 @@ Note: GitHub Pages only serves static files. It's perfect for the pitch page abo
 * **Interactive Calendar.** A poster-style 1–36 July grid. Click any date to see what happened that day.
 * **Timeline.** Drag to scroll through the full 36-day arc.
 * **Verified Archive.** Searchable, filterable, sourced record of confirmed events (শহীদ, মোড়/turning point, হামলা, fall), built on citation rather than memory.
-* **Digital Memorial Wall.** A dedicated space (`/memorial`) to light a candle, leave a flower, or post a moderated tribute for named and unnamed martyrs of the uprising — no photographs used, out of respect and privacy; only well-documented names are seeded, with room for families or admins to add verified profiles.
+* **Digital Memorial Wall.** A dedicated space (`/memorial`) to light a candle, leave a flower, or post a moderated tribute for named and unnamed martyrs of the uprising: no photographs used, out of respect and privacy; only well-documented names are seeded, with room for families or admins to add verified profiles.
 * **About Us.** The team behind it.
 
 ### 🌐 Site-wide
 
-* **True bilingual support** (বাংলা ⇄ English), one click, everywhere — the entire interface, including the memorial, dashboard, and admin tooling.
+* **True bilingual support** (বাংলা ⇄ English), one click, everywhere: the entire interface, including the memorial, dashboard, and admin tooling.
 * **Dark red, gold, and black visual identity** carried consistently from the homepage to the certificates themselves, with a faint fist watermark, so a sealed certificate is recognizably this movement's, not a generic template.
-* **PWA-ready** — installable, with an offline-first service worker for low-connectivity field use.
+* **PWA-ready**: installable, with an offline-first service worker for low-connectivity field use.
 
 ---
 
@@ -109,11 +109,11 @@ Scored against the 80% that isn't audience engagement, because a project should 
 
 | Criterion | Weight | How ShottoQR earns it |
 |---|---|---|
-| **Impact & relevance to track** | 25% | Solves a documented, active problem — contested visual evidence and untracked justice claims from a real national event — for three concrete user groups. Victims and families get anonymous reporting, status visibility, and now a public transparency index. Journalists and investigators get independent, offline-capable verification, a custody trail, and a court-ready export. Government and oversight bodies get a structured case pipeline and a live public dashboard. This is a human rights and civic-infrastructure project, not a repurposed generic app. |
+| **Impact & relevance to track** | 25% | Solves a documented, active problem: contested visual evidence and untracked justice claims from a real national event — for three concrete user groups. Victims and families get anonymous reporting, status visibility, and now a public transparency index. Journalists and investigators get independent, offline-capable verification, a custody trail, and a court-ready export. Government and oversight bodies get a structured case pipeline and a live public dashboard. This is a human rights and civic-infrastructure project, not a repurposed generic app. |
 | **Technical execution** | 20% | Not a mockup. 7 independently implemented forensic signals with honestly reported score behaviour. A real SHA-256 hash-chain seal *and* a real Ed25519 signature, both independently verifiable offline. A FastAPI backend covering verification, case tracking, dashboard aggregation, and PDF export. Every claim in this README is something the code actually does, including what it doesn't yet do (see [Known Limitations](#-known-limitations-built-to-be-trusted-not-oversold)). |
 | **Innovation & originality** | 15% | The combination is the innovation: forgery detection honestly scoped for real-world evidence photos from a civil movement, fused with a PII-free justice pipeline, an *offline-verifiable* cryptographic seal, an explainable (not black-box) integrity score, and a national transparency index most hackathon projects never attempt. |
 | **Feasibility & resilience** | 10% | Runs on SQLite with no external services required. No GPU, no paid API keys — functional on a single low-end machine or a free-tier deploy (Render/Railway). Offline QR verification and a PWA shell mean the core trust mechanism survives exactly the condition that made July 2024 hard to document: an internet shutdown. |
-| **Presentation & usability** | 10% | One homepage — verification, reporting, the dashboard, and the memorial all live in a single bilingual interface a non-technical judge, or a non-technical victim's family member, can use unassisted. See the [pitch page](./docs/index.html) for the full visual identity. |
+| **Presentation & usability** | 10% | One homepage: verification, reporting, the dashboard, and the memorial all live in a single bilingual interface a non-technical judge, or a non-technical victim's family member, can use unassisted. See the [pitch page](./docs/index.html) for the full visual identity. |
 
 ---
 
@@ -122,8 +122,8 @@ Scored against the 80% that isn't audience engagement, because a project should 
 This section exists because the goal was never just to win a hackathon. It's to build something the government can actually run.
 
 * **Privacy by design, not privacy by policy.** PII fields don't exist in the schema, so there's nothing to leak, subpoena unsafely, or misconfigure.
-* **Auditable by default.** Every seal, every view, every status change is logged and independently re-verifiable via QR — exactly the property an oversight ministry, a UN fact-finding mission, or an international press body needs before trusting a domestic system's output.
-* **Offline-first trust.** Verification does not require the internet, the server, or even this codebase to be online — only the public key and the signed manifest. That property matters most in exactly the conditions a crisis creates.
+* **Auditable by default.** Every seal, every view, every status change is logged and independently re-verifiable via QR, exactly the property an oversight ministry, a UN fact-finding mission, or an international press body needs before trusting a domestic system's output.
+* **Offline-first trust.** Verification does not require the internet, the server, or even this codebase to be online, only the public key and the signed manifest. That property matters most in exactly the conditions a crisis creates.
 * **Boring, resilient infrastructure.** SQLite to PostgreSQL is a one-line connection-string change when case volume demands it. The whole stack runs on commodity hardware.
 * **Honest forensics.** The system tells you what it can and can't detect (see below) instead of pretending to be an infallible lie detector — the property a government or international body needs before staking legal or diplomatic weight on a verified badge.
 * **Extendable to any future movement or disaster.** The July 2024 memorial and dashboard are a configuration of the architecture, not a hardcoded one-off. The same evidence-sealing, case-tracking, and transparency-index core could be repointed at any future crisis needing verifiable public record — an election, a disaster, a human rights investigation.
