@@ -124,19 +124,7 @@ Read this section out loud to the judges. It is a strength, not a weakness.
 
 ## 🏗️ Architecture
 
-```mermaid
-flowchart TD
-    A["Image upload<br/>role: Journalist / Witness / Investigator / Public"] --> B["Layer 1: Verification Engine<br/>ELA · EXIF · Blur · Histogram<br/>Blockiness · Rotation · Screenshot match"]
-    B --> C["Integrity Score + Explainable breakdown"]
-    C --> D["Seal · QR · Certificate<br/>SHA-256 hash chain + Ed25519 signature"]
-    D --> E["Offline QR Verifier<br/>no server, no internet required"]
-    D --> P["Court-ready PDF Export<br/>hash + signals + signature + custody"]
-    D --> F["Layer 2: Justice Tracker<br/>link evidence to a case"]
-    F --> G["Report to Investigation to<br/>Medical Support to Compensation to<br/>Final Resolution"]
-    G --> H["Public Transparency Feed<br/>PII-free, role-based custody log"]
-    G --> I["National Transparency Dashboard<br/>KPIs · heatmap · Transparency Index"]
-    H --> J["July Memorial Wall<br/>candles · flowers · tributes"]
-```
+
 
 **Stack:** FastAPI, SQLAlchemy, SQLite, vanilla JS/HTML/CSS frontend (bilingual I18N), Pillow forensics pipeline, PyNaCl (Ed25519), ReportLab (PDF export), `qrcode` + `jsQR` (offline scanning), PWA service worker.
 
