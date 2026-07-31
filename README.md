@@ -11,7 +11,12 @@
 [![Bilingual](https://img.shields.io/badge/bilingual-বাংলা%20%2F%20English-D62828?style=flat-square)](#)
 [![License](https://img.shields.io/badge/license-MIT-black?style=flat-square)](#-license)
 
-**[▶ Live Demo](https://testt-1-zguo.onrender.com/) · [🎬 Pitch Page](https://drive.google.com/file/d/1hiw2udQpt2MrbmkOM2tB-p2y0IR2kPWO/view?usp=sharing)**
+<a href="https://youtu.be/oMPBr9XrcvE">
+  <img src="assets/demo-thumbnail.png" width="900" alt="Watch Demo">
+</a>
+
+
+**[▶ Live Demo](https://testt-1-zguo.onrender.com/)**
 
 </div>
 
